@@ -28,7 +28,7 @@ namespace FileProcessor.Engine.Fields
 
         #endregion
 
-        public FixedLengthField(PropertyInfo property, int order) : base(property, order)
+        public FixedLengthField(PropertyInfo property) : base(property)
         {
             TruncateField = false;
             FieldAlignment = GetDefaultFieldAlignment(property.PropertyType);
@@ -70,7 +70,10 @@ namespace FileProcessor.Engine.Fields
             if (alignment == FieldAlignment.Left)
                 return ' ';
 
-            if (Nullable.GetUnderlyingType(propertyType).GetTypeInfo().IsPrimitive
+            var t = propertyType;
+            t = Nullable.GetUnderlyingType(propertyType) ?? t;
+
+            if (t.GetTypeInfo().IsPrimitive
                 && propertyType != typeof(bool)
                 && propertyType != typeof(char))
                 return '0';

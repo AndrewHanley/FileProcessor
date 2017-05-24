@@ -26,7 +26,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void Nullable()
         {
             var property = typeof(TestDataClass).GetProperty("NullableField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             Assert.Equal(null, field.ConvertToValue(null));
         }
@@ -35,7 +35,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void NullToDefault()
         {
             var property = typeof(TestDataClass).GetProperty("NullField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             Assert.Equal(0, field.ConvertToValue(null));
         }
@@ -44,7 +44,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void NullException()
         {
             var property = typeof(TestDataClass).GetProperty("IntField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             var exception = Assert.Throws<ConversionException>(() => field.ConvertToValue(null));
 
@@ -59,7 +59,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void StringField()
         {
             var property = typeof(TestDataClass).GetProperty("StringField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             Assert.Equal("Field Value", field.ConvertToValue("Field Value"));
         }
@@ -72,7 +72,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void CharField()
         {
             var property = typeof(TestDataClass).GetProperty("CharField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             Assert.Equal('A', field.ConvertToValue("A"));
         }
@@ -85,7 +85,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void DateTimeFieldNoFormat()
         {
             var property = typeof(TestDataClass).GetProperty("DateTimeField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
             var dateTime = DateTime.Today.AddHours(12).AddMinutes(15);
 
             Assert.Equal(dateTime, field.ConvertToValue(dateTime.ToString(CultureInfo.CurrentCulture)));
@@ -95,7 +95,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void DateTime_yyyyMMddHHmmss()
         {
             var property = typeof(TestDataClass).GetProperty("DateTime_yyyyMMddHHmmss_Field");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
             var dateTime = new DateTime(1973, 3, 30, 13, 45, 55);
 
             Assert.Equal(dateTime, field.ConvertToValue("19730330134555"));
@@ -105,7 +105,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void Date_yyyyMMdd()
         {
             var property = typeof(TestDataClass).GetProperty("Date_yyyyMMdd_Field");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
             var dateTime = new DateTime(1973, 3, 30);
 
             Assert.Equal(dateTime, field.ConvertToValue("19730330"));
@@ -115,18 +115,17 @@ namespace FileProcessor.Engine.Test.Fields
         public void Time_h_mm_tt()
         {
             var property = typeof(TestDataClass).GetProperty("Time_h_mm_tt_Field");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
             var dateTime = DateTime.Today.AddHours(13).AddMinutes(45);
 
             Assert.Equal(dateTime, field.ConvertToValue("1:45 PM"));
         }
 
-
         [Fact]
         public void DateTimeException()
         {
             var property = typeof(TestDataClass).GetProperty("DateTimeExceptionField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
             var dateTime = new DateTime(1973, 3, 30, 13, 45, 0);
 
             var exception = Assert.Throws<ConversionException>(() => field.ConvertToValue(dateTime.ToString(CultureInfo.CurrentCulture)));
@@ -145,7 +144,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void BooleanField(string value, bool expectedResult)
         {
             var property = typeof(TestDataClass).GetProperty("BooleanField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             Assert.Equal(expectedResult, field.ConvertToValue(value));
         }
@@ -156,7 +155,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void YesNoField(string value, bool expectedResult)
         {
             var property = typeof(TestDataClass).GetProperty("YesNoField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             Assert.Equal(expectedResult, field.ConvertToValue(value));
         }
@@ -165,7 +164,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void BooleanFieldException()
         {
             var property = typeof(TestDataClass).GetProperty("BooleanField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             var exception = Assert.Throws<ConversionException>(() => field.ConvertToValue("NOPER"));
 
@@ -184,7 +183,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void IntField(string value, int expectedResult)
         {
             var property = typeof(TestDataClass).GetProperty("IntField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             Assert.Equal(expectedResult, field.ConvertToValue(value));
         }
@@ -193,7 +192,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void IntFieldException()
         {
             var property = typeof(TestDataClass).GetProperty("IntField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             var exception = Assert.Throws<ConversionException>(() => field.ConvertToValue("3147483647"));
 
@@ -212,7 +211,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void DecimalField(string value, decimal expectedResult)
         {
             var property = typeof(TestDataClass).GetProperty("DecimalField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             Assert.Equal(expectedResult, field.ConvertToValue(value));
         }
@@ -224,7 +223,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void Decimal2PlacesField(string value, decimal expectedResult)
         {
             var property = typeof(TestDataClass).GetProperty("Decimal2PlacesField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             Assert.Equal(expectedResult, field.ConvertToValue(value));
         }
@@ -236,7 +235,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void DecimalNoSeperatorField(string value, decimal expectedResult)
         {
             var property = typeof(TestDataClass).GetProperty("DecimalNoSeperatorField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             Assert.Equal(expectedResult, field.ConvertToValue(value));
         }
@@ -245,7 +244,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void DecimalFieldException()
         {
             var property = typeof(TestDataClass).GetProperty("DecimalField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             var exception = Assert.Throws<ConversionException>(() => field.ConvertToValue("ABC"));
 
@@ -260,7 +259,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void TicketNumberField()
         {
             var property = typeof(TestDataClass).GetProperty("TicketNumberField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             Assert.Equal(123456789, field.ConvertToValue("123-456-789"));
         }
@@ -269,14 +268,14 @@ namespace FileProcessor.Engine.Test.Fields
         public void ConverterExceptionField()
         {
             var property = typeof(TestDataClass).GetProperty("ConverterExceptionField");
-            Assert.Throws<InvalidCastException>(() => new TestField(property, 1));
+            Assert.Throws<InvalidCastException>(() => new TestField(property));
         }
 
         #endregion
 
         private class TestField : FieldBase
         {
-            public TestField(PropertyInfo property, int order) : base(property, order)
+            public TestField(PropertyInfo property) : base(property)
             {
             }
         }

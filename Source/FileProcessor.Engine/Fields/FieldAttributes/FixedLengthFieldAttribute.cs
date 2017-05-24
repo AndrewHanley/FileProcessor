@@ -26,6 +26,7 @@ namespace FileProcessor.Engine.Fields.FieldAttributes
         public FixedLengthFieldAttribute()
         {
             StartIndex = -1;
+            Length = -1;
             FieldAlignment = FieldAlignment.Default;
             PaddingCharacter = '\0';
             TruncateField = false;

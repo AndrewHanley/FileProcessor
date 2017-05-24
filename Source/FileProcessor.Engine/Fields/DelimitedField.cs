@@ -21,7 +21,7 @@ namespace FileProcessor.Engine.Fields
 
         #endregion
 
-        public DelimitedField(PropertyInfo property, int order) : base(property, order)
+        public DelimitedField(PropertyInfo property) : base(property)
         {
             QuoteCharacter = '\0';
             EndQuoteCharacter = '\0';

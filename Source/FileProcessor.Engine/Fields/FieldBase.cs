@@ -39,11 +39,11 @@ namespace FileProcessor.Engine.Fields
 
         #region Constructors
 
-        protected FieldBase(PropertyInfo property, int order)
+        protected FieldBase(PropertyInfo property)
         {
             FieldProperty = property;
             FieldType = property.PropertyType;
-            Order = order;
+            Order = -1;
             Name = property.Name;
             ThrowExceptionOnNull = true;
             FieldConverter = null;
@@ -61,7 +61,7 @@ namespace FileProcessor.Engine.Fields
 
             if (attribute != null)
             {
-                Order = attribute.Order == -1 ? Order : attribute.Order;
+                Order = attribute.Order;
                 Name = attribute.Name ?? Name;
                 ThrowExceptionOnNull = attribute.ThrowExceptionOnNull;
                 FormatString = attribute.FormatString;

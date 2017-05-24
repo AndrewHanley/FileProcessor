@@ -19,10 +19,10 @@ namespace FileProcessor.Engine.Test.Fields
         public void CreateField()
         {
             var property = typeof(TestDataClass).GetProperty("BooleanField");
-            var field = new TestField(property, 3);
+            var field = new TestField(property);
 
             Assert.Equal("BooleanField", field.Name);
-            Assert.Equal(3, field.Order);
+            Assert.Equal(-1, field.Order);
             Assert.Equal(typeof(bool), field.FieldType);
             Assert.NotEqual(null, field.FieldProperty);
         }
@@ -31,7 +31,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void FieldAttributeValues()
         {
             var property = typeof(TestDataClass).GetProperty("StringField");
-            var field = new TestField(property, 3);
+            var field = new TestField(property);
 
             Assert.Equal("NameOverride", field.Name);
             Assert.Equal(12, field.Order);
@@ -41,7 +41,7 @@ namespace FileProcessor.Engine.Test.Fields
 
         private class TestField : FieldBase
         {
-            public TestField(PropertyInfo property, int order) : base(property, order)
+            public TestField(PropertyInfo property) : base(property)
             {
             }
         }

@@ -25,7 +25,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void NUllField()
         {
             var property = typeof(TestDataClass).GetProperty("StringField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             Assert.Equal(null, field.ConvertToString(null));
         }
@@ -42,7 +42,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void StringField(string value, string expectedResult)
         {
             var property = typeof(TestDataClass).GetProperty("StringField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             Assert.Equal(expectedResult, field.ConvertToString(value));
         }
@@ -57,7 +57,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void BooleanField(bool value, string expectedResult)
         {
             var property = typeof(TestDataClass).GetProperty("BooleanField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             Assert.Equal(expectedResult, field.ConvertToString(value));
         }
@@ -68,7 +68,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void OnOffField(bool value, string expectedResult)
         {
             var property = typeof(TestDataClass).GetProperty("OnOffField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             Assert.Equal(expectedResult, field.ConvertToString(value));
         }
@@ -81,7 +81,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void DateTimeField()
         {
             var property = typeof(TestDataClass).GetProperty("DateTimeField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
             var dateTime = DateTime.Now;
 
             Assert.Equal(dateTime.ToString(CultureInfo.CurrentCulture), field.ConvertToString(dateTime));
@@ -91,7 +91,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void Date_yyyyMMdd_Field()
         {
             var property = typeof(TestDataClass).GetProperty("Date_yyyyMMdd_Field");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
             var dateTime = new DateTime(1994, 7, 23, 16, 24, 15);
 
             Assert.Equal("19940723", field.ConvertToString(dateTime));
@@ -101,7 +101,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void DateTime_MMddyyyyHHmm_Field()
         {
             var property = typeof(TestDataClass).GetProperty("DateTime_MMddyyyyHHmm_Field");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
             var dateTime = new DateTime(1994, 7, 23, 16, 24, 15);
 
             Assert.Equal("072319941624", field.ConvertToString(dateTime));
@@ -111,7 +111,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void Time_h_mm_ss_tt_Field()
         {
             var property = typeof(TestDataClass).GetProperty("Time_h_mm_ss_tt_Field");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
             var dateTime = new DateTime(1994, 7, 23, 16, 24, 15);
 
             Assert.Equal("4:24:15 PM", field.ConvertToString(dateTime));
@@ -125,7 +125,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void IntField()
         {
             var property = typeof(TestDataClass).GetProperty("IntField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             Assert.Equal("1234", field.ConvertToString(1234));
         }
@@ -136,7 +136,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void GroupedIntField(int value, string expectedValue)
         {
             var property = typeof(TestDataClass).GetProperty("GroupedIntField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             Assert.Equal(expectedValue, field.ConvertToString(value));
         }
@@ -148,7 +148,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void MoneyField(decimal value, string expectedValue)
         {
             var property = typeof(TestDataClass).GetProperty("MoneyField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             Assert.Equal(expectedValue, field.ConvertToString(value));
         }
@@ -161,7 +161,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void TicketNumberField()
         {
             var property = typeof(TestDataClass).GetProperty("TicketNumberField");
-            var field = new TestField(property, 1);
+            var field = new TestField(property);
 
             Assert.Equal("123-456-789", field.ConvertToString(123456789));
         }
@@ -170,7 +170,7 @@ namespace FileProcessor.Engine.Test.Fields
 
         private class TestField : FieldBase
         {
-            public TestField(PropertyInfo property, int order) : base(property, order)
+            public TestField(PropertyInfo property) : base(property)
             {
             }
         }
