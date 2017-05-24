@@ -9,6 +9,9 @@
 namespace FileProcessor.Engine.Fields.FieldAttributes
 {
     using System;
+    using Converters;
+    using Exceptions;
+    using Resources;
 
     [AttributeUsage(AttributeTargets.Property)]
     public abstract class FieldAttribute : Attribute
@@ -20,6 +23,8 @@ namespace FileProcessor.Engine.Fields.FieldAttributes
         public bool ThrowExceptionOnNull { get; set; }
 
         public string FormatString { get; set; }
+
+        public Type FieldConverter { get; set; }
 
         protected FieldAttribute()
         {

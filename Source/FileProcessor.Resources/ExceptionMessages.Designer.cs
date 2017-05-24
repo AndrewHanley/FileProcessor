@@ -143,6 +143,15 @@ namespace FileProcessor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Field Converters assigned to a property must implement IFieldConverter.
+        /// </summary>
+        public static string InvalidFieldConverter {
+            get {
+                return ResourceManager.GetString("InvalidFieldConverter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value cannot be null..
         /// </summary>
         public static string NullValue {

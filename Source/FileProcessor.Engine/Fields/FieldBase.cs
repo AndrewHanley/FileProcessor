@@ -11,6 +11,7 @@ namespace FileProcessor.Engine.Fields
     using System;
     using System.Globalization;
     using System.Reflection;
+    using Converters;
     using Exceptions;
     using FieldAttributes;
     using FieldAttributes.FormatAttributes;
@@ -30,6 +31,8 @@ namespace FileProcessor.Engine.Fields
 
         public string FormatString { get; set; }
 
+        public IFieldConverter FieldConverter { get; set; }
+
         public PropertyInfo FieldProperty { get; set; }
 
         #endregion
@@ -43,6 +46,7 @@ namespace FileProcessor.Engine.Fields
             Order = order;
             Name = property.Name;
             ThrowExceptionOnNull = true;
+            FieldConverter = null;
 
             ProcessFieldAttribute(property);
         }
@@ -61,6 +65,7 @@ namespace FileProcessor.Engine.Fields
                 Name = attribute.Name ?? Name;
                 ThrowExceptionOnNull = attribute.ThrowExceptionOnNull;
                 FormatString = attribute.FormatString;
+                FieldConverter = attribute.FieldConverter == null ? null : (IFieldConverter) Activator.CreateInstance(attribute.FieldConverter);
             }
         }
 
@@ -72,6 +77,9 @@ namespace FileProcessor.Engine.Fields
         {
             try
             {
+                if (FieldConverter != null && FieldConverter.CanConvertToValue())
+                    return FieldConverter.ConvertToValue(value, FieldProperty);
+
                 if (string.IsNullOrWhiteSpace(value) || string.IsNullOrEmpty(value))
                     return GetNullValue();
 
@@ -164,6 +172,9 @@ namespace FileProcessor.Engine.Fields
 
         public virtual string ConvertToString(object value)
         {
+            if (FieldConverter != null && FieldConverter.CanConvertToString())
+                return FieldConverter.ConvertToString(value, FieldProperty);
+
             if (value == null)
                 return null;
 

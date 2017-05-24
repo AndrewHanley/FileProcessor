@@ -12,6 +12,7 @@ namespace FileProcessor.Engine.Test.Fields
     using System.Globalization;
     using System.Reflection;
     using Engine.Fields;
+    using Engine.Fields.Converters;
     using Engine.Fields.FieldAttributes;
     using Engine.Fields.FieldAttributes.FormatAttributes;
     using Xunit;
@@ -154,6 +155,19 @@ namespace FileProcessor.Engine.Test.Fields
 
         #endregion
 
+        #region Custom Converter Tests
+
+        [Fact]
+        public void TicketNumberField()
+        {
+            var property = typeof(TestDataClass).GetProperty("TicketNumberField");
+            var field = new TestField(property, 1);
+
+            Assert.Equal("123-456-789", field.ConvertToString(123456789));
+        }
+
+        #endregion
+
         private class TestField : FieldBase
         {
             public TestField(PropertyInfo property, int order) : base(property, order)
@@ -163,6 +177,29 @@ namespace FileProcessor.Engine.Test.Fields
 
         private class TestFieldAttribute : FieldAttribute
         {
+        }
+
+        private class TestFieldConverter : IFieldConverter
+        {
+            public bool CanConvertToValue()
+            {
+                return false;
+            }
+
+            public object ConvertToValue(string value, PropertyInfo property)
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool CanConvertToString()
+            {
+                return true;
+            }
+
+            public string ConvertToString(object value, PropertyInfo property)
+            {
+                return value.ToString().Insert(6, "-").Insert(3, "-");
+            }
         }
 
         private class TestDataClass
@@ -192,6 +229,9 @@ namespace FileProcessor.Engine.Test.Fields
 
             [TestField(FormatString = "C")]
             public decimal MoneyField { get; set; }
+
+            [TestField(FieldConverter = typeof(TestFieldConverter))]
+            public int TicketNumberField { get; set; }
         }
     }
 }

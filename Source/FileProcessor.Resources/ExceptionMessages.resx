@@ -144,6 +144,9 @@
   <data name="InvalidFieldAlignment" xml:space="preserve">
     <value>{0} is an invalid field alignment.</value>
   </data>
+  <data name="InvalidFieldConverter" xml:space="preserve">
+    <value>Field Converters assigned to a property must implement IFieldConverter</value>
+  </data>
   <data name="NullValue" xml:space="preserve">
     <value>Value cannot be null.</value>
   </data>
