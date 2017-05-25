@@ -13,6 +13,15 @@ namespace FileProcessor.Engine.Records.RecordAttributes
     [AttributeUsage(AttributeTargets.Class)]
     public class DelimitedRecordAttribute : RecordAttribute
     {
-        public char Delimiter { get; set; }
+        public string Delimiter { get; set; }
+
+        public char QuoteCharacter { get; set; }
+        public char EndQuoteCharacter { get; set; }
+
+        public DelimitedRecordAttribute()
+        {
+            QuoteCharacter = '\0';
+            EndQuoteCharacter = '\0';
+        }
     }
 }

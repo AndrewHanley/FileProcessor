@@ -63,7 +63,7 @@ namespace FileProcessor.Engine.Test.Records
 
             Assert.Equal("StringField", record.RecordElements[0].Field.Name);
             Assert.Equal("IntField", record.RecordElements[1].Field.Name);
-            Assert.Equal("Embedded", record.RecordElements[2].PropertyInfo.Name);
+            Assert.Equal("Embedded", record.RecordElements[2].Field.Name);
             Assert.Equal("EmbeddedField", record.RecordElements[2].NestedElements[0].Field.Name);
         }
 
@@ -104,7 +104,9 @@ namespace FileProcessor.Engine.Test.Records
 
             Assert.Equal(RecordType.Delimited, record.RecordType);
             Assert.Equal(typeof(DelimitedRecordAttribute), record.RecordAttribute.GetType());
-            Assert.Equal(';', ((DelimitedRecordAttribute) record.RecordAttribute).Delimiter);
+            Assert.Equal(";", ((DelimitedRecordAttribute) record.RecordAttribute).Delimiter);
+            Assert.Equal('[', ((DelimitedRecordAttribute) record.RecordAttribute).QuoteCharacter);
+            Assert.Equal(']', ((DelimitedRecordAttribute) record.RecordAttribute).EndQuoteCharacter);
         }
 
         [Fact]
@@ -131,7 +133,7 @@ namespace FileProcessor.Engine.Test.Records
 
             Assert.Equal("StringField", record.RecordElements[0].Field.Name);
             Assert.Equal("IntField", record.RecordElements[1].Field.Name);
-            Assert.Equal("Embedded", record.RecordElements[2].PropertyInfo.Name);
+            Assert.Equal("Embedded", record.RecordElements[2].Field.Name);
             Assert.Equal("EmbeddedField", record.RecordElements[2].NestedElements[0].Field.Name);
         }
 
@@ -262,12 +264,12 @@ namespace FileProcessor.Engine.Test.Records
 
         #region Delimited Test Classes
 
-        [DelimitedRecord(Delimiter = ';')]
+        [DelimitedRecord(Delimiter = ";", QuoteCharacter = '[', EndQuoteCharacter = ']')]
         private class DelimitedClass
         {
         }
 
-        [DelimitedRecord(Delimiter = ';')]
+        [DelimitedRecord(Delimiter = ";")]
         private class DelimitedDataClass
         {
             public string StringField { get; set; }
@@ -275,7 +277,7 @@ namespace FileProcessor.Engine.Test.Records
             public int IntField { get; set; }
         }
 
-        [DelimitedRecord(Delimiter = ';')]
+        [DelimitedRecord(Delimiter = ";")]
         private class DelimitedNestedClass
         {
             public string StringField { get; set; }
@@ -290,7 +292,7 @@ namespace FileProcessor.Engine.Test.Records
             public string EmbeddedField { get; set; }
         }
 
-        [DelimitedRecord(Delimiter = ';')]
+        [DelimitedRecord(Delimiter = ";")]
         private class OrderedDelimitedClass
         {
             [DelimitedField(Order = 2)]

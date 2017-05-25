@@ -43,13 +43,13 @@ namespace FileProcessor.Engine.Fields
         {
             var attribute = property.GetCustomAttribute<FixedLengthFieldAttribute>();
 
-            if (attribute == null)
-                throw new AttributeException(ExceptionMessages.FieldAttributeMissing, property.Name, typeof(FixedLengthFieldAttribute).Name);
-
-            Length = attribute.Length;
-            FieldAlignment = attribute.FieldAlignment == FieldAlignment.Default ? FieldAlignment : attribute.FieldAlignment;
-            PaddingCharacter = attribute.PaddingCharacter == '\0' ? PaddingCharacter : attribute.PaddingCharacter;
-            TruncateField = attribute.TruncateField;
+            if (attribute != null)
+            {
+                Length = attribute.Length;
+                FieldAlignment = attribute.FieldAlignment == FieldAlignment.Default ? FieldAlignment : attribute.FieldAlignment;
+                PaddingCharacter = attribute.PaddingCharacter == '\0' ? PaddingCharacter : attribute.PaddingCharacter;
+                TruncateField = attribute.TruncateField;
+            }
         }
 
         private FieldAlignment GetDefaultFieldAlignment(Type propertyType)

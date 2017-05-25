@@ -21,10 +21,10 @@ namespace FileProcessor.Engine.Fields
 
         #endregion
 
-        public DelimitedField(PropertyInfo property) : base(property)
+        public DelimitedField(PropertyInfo property, char quoteCharacter, char endQuoteCharacter) : base(property)
         {
-            QuoteCharacter = '\0';
-            EndQuoteCharacter = '\0';
+            QuoteCharacter = quoteCharacter;
+            EndQuoteCharacter = endQuoteCharacter == '\0' ? quoteCharacter : endQuoteCharacter;
 
             ProcessDelimitedFieldAttribute(property);
         }
@@ -38,7 +38,11 @@ namespace FileProcessor.Engine.Fields
             if (attribute != null)
             {
                 QuoteCharacter = attribute.QuoteCharacter == '\0' ? QuoteCharacter : attribute.QuoteCharacter;
-                EndQuoteCharacter = attribute.EndQuoteCharacter == '\0' ? QuoteCharacter : attribute.EndQuoteCharacter;
+                EndQuoteCharacter = attribute.EndQuoteCharacter == '\0' 
+                    ? (EndQuoteCharacter == '\0' 
+                        ? QuoteCharacter 
+                        : EndQuoteCharacter) 
+                    : attribute.EndQuoteCharacter;
             }
         }
 

@@ -6,18 +6,18 @@
 //    Author:    Andrew - 2017/05/23
 //  ---------------------------------------------
 
-namespace FileProcessor.Engine.Records
+namespace FileProcessor.Engine.Records.RecordElements
 {
     using System.Collections.Generic;
     using System.Reflection;
     using Fields;
 
-    public class RecordElement
+    public class RecordElementBase
     {
         public FieldBase Field { get; set; }
 
-        public PropertyInfo PropertyInfo { get; set; }
+        public int Order { get; set; }
 
-        public List<RecordElement> NestedElements { get; set; }
+        public List<RecordElementBase> NestedElements { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void CreateDelimitedField()
         {
             var property = typeof(TestDataClass).GetProperty("StringField");
-            var field = new DelimitedField(property);
+            var field = new DelimitedField(property, '\0', '\0');
 
             Assert.Equal('\0', field.QuoteCharacter);
         }
@@ -30,7 +30,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void QuoteOverrideField()
         {
             var property = typeof(TestDataClass).GetProperty("QuoteOverrideField");
-            var field = new DelimitedField(property);
+            var field = new DelimitedField(property, '\0', '\0');
 
             Assert.Equal('"', field.QuoteCharacter);
         }
@@ -39,7 +39,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void EndQuoteField()
         {
             var property = typeof(TestDataClass).GetProperty("EndQuoteField");
-            var field = new DelimitedField(property);
+            var field = new DelimitedField(property, '\0', '\0');
 
             Assert.Equal('[', field.QuoteCharacter);
             Assert.Equal(']', field.EndQuoteCharacter);
@@ -53,7 +53,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void ToValueNoQuotes()
         {
             var property = typeof(TestDataClass).GetProperty("StringField");
-            var field = new DelimitedField(property);
+            var field = new DelimitedField(property, '\0', '\0');
 
             Assert.Equal("No Quotes", field.ConvertToValue("No Quotes"));
         }
@@ -62,7 +62,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void ToValueWithQuotes()
         {
             var property = typeof(TestDataClass).GetProperty("QuoteOverrideField");
-            var field = new DelimitedField(property);
+            var field = new DelimitedField(property, '\0', '\0');
 
             Assert.Equal("With \" Quotes", field.ConvertToValue(@"""With "" Quotes"""));
         }
@@ -71,9 +71,27 @@ namespace FileProcessor.Engine.Test.Fields
         public void ToValueWithStartAndEndQuotes()
         {
             var property = typeof(TestDataClass).GetProperty("EndQuoteField");
-            var field = new DelimitedField(property);
+            var field = new DelimitedField(property, '\0', '\0');
 
             Assert.Equal("With [Start] & [End] Quotes", field.ConvertToValue(@"[With [[Start]] & [[End]] Quotes]"));
+        }
+
+        [Fact]
+        public void ToValueInheritedQuotes()
+        {
+            var property = typeof(TestDataClass).GetProperty("StringField");
+            var field = new DelimitedField(property, '"', '\0');
+
+            Assert.Equal("Inherited Quotes", field.ConvertToValue("\"Inherited Quotes\""));
+        }
+
+        [Fact]
+        public void ToValueInheritedWithStartAndEndQuotes()
+        {
+            var property = typeof(TestDataClass).GetProperty("StringField");
+            var field = new DelimitedField(property, '[', ']');
+
+            Assert.Equal("Inherited Quotes", field.ConvertToValue("[Inherited Quotes]"));
         }
 
         #endregion
@@ -84,7 +102,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void ToStringNoQuotes()
         {
             var property = typeof(TestDataClass).GetProperty("StringField");
-            var field = new DelimitedField(property);
+            var field = new DelimitedField(property, '\0', '\0');
 
             Assert.Equal("No Quotes", field.ConvertToString("No Quotes"));
         }
@@ -93,7 +111,7 @@ namespace FileProcessor.Engine.Test.Fields
         public void ToStringWithQuotes()
         {
             var property = typeof(TestDataClass).GetProperty("QuoteOverrideField");
-            var field = new DelimitedField(property);
+            var field = new DelimitedField(property, '\0', '\0');
 
             Assert.Equal("\"With \"\" Quotes\"", field.ConvertToString(@"With "" Quotes"));
         }
@@ -102,9 +120,27 @@ namespace FileProcessor.Engine.Test.Fields
         public void ToStringWithStartAndEndQuotes()
         {
             var property = typeof(TestDataClass).GetProperty("EndQuoteField");
-            var field = new DelimitedField(property);
+            var field = new DelimitedField(property, '\0', '\0');
 
             Assert.Equal("[With [[Start]] & [[End]] Quotes]", field.ConvertToString(@"With [Start] & [End] Quotes"));
+        }
+
+        [Fact]
+        public void ToStringInheritedQuotes()
+        {
+            var property = typeof(TestDataClass).GetProperty("StringField");
+            var field = new DelimitedField(property, '"', '\0');
+
+            Assert.Equal("\"Inherited Quotes\"", field.ConvertToString("Inherited Quotes"));
+        }
+
+        [Fact]
+        public void ToStringInheritedWithStartAndEndQuotes()
+        {
+            var property = typeof(TestDataClass).GetProperty("StringField");
+            var field = new DelimitedField(property, '[', ']');
+
+            Assert.Equal("[Inherited Quotes]", field.ConvertToString("Inherited Quotes"));
         }
 
         #endregion
