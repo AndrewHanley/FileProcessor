@@ -14,6 +14,8 @@ namespace FileProcessor.Records.RecordElements
 
     public class RecordElementBase
     {
+        public string FieldName { get; set; }
+
         public FieldBase Field { get; set; }
 
         public int Order { get; set; }

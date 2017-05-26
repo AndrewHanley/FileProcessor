@@ -15,8 +15,6 @@ namespace FileProcessor.Fields.FieldAttributes
     {
         public int Length { get; set; }
 
-        public int StartIndex { get; set; }
-
         public FieldAlignment FieldAlignment { get; set; }
 
         public char PaddingCharacter { get; set; }
@@ -25,7 +23,6 @@ namespace FileProcessor.Fields.FieldAttributes
 
         public FixedLengthFieldAttribute()
         {
-            StartIndex = -1;
             Length = -1;
             FieldAlignment = FieldAlignment.Default;
             PaddingCharacter = '\0';

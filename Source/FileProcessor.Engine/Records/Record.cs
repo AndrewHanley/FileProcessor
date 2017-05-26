@@ -12,6 +12,7 @@ namespace FileProcessor.Records
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using System.Text;
     using Exceptions;
     using Fields;
     using Fields.FieldAttributes;
@@ -19,7 +20,7 @@ namespace FileProcessor.Records
     using RecordElements;
     using Resources;
 
-    public abstract class RecordBase<T> where T : class
+    public class Record<T> where T : class
     {
         #region Properties
 
@@ -31,13 +32,13 @@ namespace FileProcessor.Records
 
         #endregion
 
-        protected RecordBase()
+        public Record()
         {
             ProcessRecordAttribute(typeof(T).GetTypeInfo().GetCustomAttribute<RecordAttribute>());
             GenerateFields();
         }
 
-        protected RecordBase(List<RecordElementBase> recordElements, RecordAttribute recordAttribute)
+        public Record(List<RecordElementBase> recordElements, RecordAttribute recordAttribute)
         {
             ProcessRecordAttribute(recordAttribute);
             RecordElements = recordElements;
@@ -103,6 +104,8 @@ namespace FileProcessor.Records
                         return null;
                 }
 
+                element.FieldName = property.Name;
+
                 if (IsPropertyEmbeddedClass(property))
                     element.NestedElements = SortElements(ExtractRecordElements(property.PropertyType));
 
@@ -158,6 +161,43 @@ namespace FileProcessor.Records
             }
 
             return elements;
+        }
+
+        #endregion
+
+        #region Write Record
+
+        public string WriteRecord(T entity)
+        {
+            var values = GenerateString(entity, RecordElements);
+
+            return RecordType == RecordType.Delimited
+                ? string.Join(((DelimitedRecordAttribute) RecordAttribute).Delimiter, values)
+                : string.Join(string.Empty, values);
+        }
+
+        private List<string> GenerateString(object entity, List<RecordElementBase> elements)
+        {
+            var values = new List<string>();
+
+            foreach (var element in elements)
+            {
+                var value = entity.GetType().GetProperty(element.FieldName).GetValue(entity);
+
+                if (element.NestedElements != null)
+                {
+                    if (value == null)
+                        continue;
+
+                    values.AddRange(GenerateString(value, element.NestedElements));
+                }
+                else
+                {
+                    values.Add(element.Field.ConvertToString(value));
+                }
+            }
+
+            return values;
         }
 
         #endregion

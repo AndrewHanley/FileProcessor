@@ -57,7 +57,8 @@ namespace FileProcessor.Fields
             var t = propertyType;
             t = Nullable.GetUnderlyingType(t) ?? t;
 
-            if (t.GetTypeInfo().IsPrimitive
+            if ((t.GetTypeInfo().IsPrimitive 
+                || propertyType == typeof(decimal))
                 && propertyType != typeof(bool)
                 && propertyType != typeof(char))
                 return FieldAlignment.Right;
@@ -73,7 +74,8 @@ namespace FileProcessor.Fields
             var t = propertyType;
             t = Nullable.GetUnderlyingType(propertyType) ?? t;
 
-            if (t.GetTypeInfo().IsPrimitive
+            if ((t.GetTypeInfo().IsPrimitive
+                || propertyType == typeof(decimal))
                 && propertyType != typeof(bool)
                 && propertyType != typeof(char))
                 return '0';

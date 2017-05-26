@@ -10,7 +10,6 @@ namespace FileProcessor.Records.RecordElements
 {
     public class FixedLengthRecordElement : RecordElementBase
     {
-        public int StartIndex { get; set; }
         public int Length { get; set; }
     }
 }

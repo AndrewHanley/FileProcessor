@@ -43,16 +43,6 @@ namespace FileProcessor.Test.Fields
             Assert.Equal('A', field.PaddingCharacter);
         }
 
-        [Fact]
-        public void CreateFieldException()
-        {
-            var property = typeof(TestDataClass).GetProperty("ExceptionField");
-
-            var exception = Assert.Throws<AttributeException>(() => new FixedLengthField(property));
-
-            Assert.Equal("The ExceptionField property requires a FixedLengthFieldAttribute to be defined.", exception.Message);
-        }
-
         #endregion
 
         #region Convert To Value Tests

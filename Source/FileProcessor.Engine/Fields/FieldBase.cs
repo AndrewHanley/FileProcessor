@@ -187,6 +187,9 @@ namespace FileProcessor.Fields
             if (value is DateTime)
                 return ConvertDateTime((DateTime) value);
 
+            if (value is decimal)
+                return ConvertDecimal((decimal) value);
+
             if (value is ValueType)
                 return ConvertValueType((ValueType) value);
 
@@ -225,6 +228,29 @@ namespace FileProcessor.Fields
             return string.IsNullOrEmpty(FormatString)
                 ? value.ToString(CultureInfo.CurrentCulture)
                 : value.ToString(FormatString);
+        }
+
+        protected virtual string ConvertDecimal(decimal value)
+        {
+            var formatAttribute = FieldProperty.GetCustomAttribute<DecimalFormatAttribute>();
+            var formatString = string.IsNullOrEmpty(FormatString) 
+                ? "F"
+                : FormatString;
+
+            if (formatAttribute != null && formatAttribute.DecimalPlaces != -1)
+            {
+                if (formatAttribute.IncludesDecimalSeperator)
+                {
+                    formatString = $"F{formatAttribute.DecimalPlaces}";
+                }
+                else
+                {
+                    value = value * (decimal)Math.Pow(10, formatAttribute.DecimalPlaces);
+                    formatString = "F0";
+                }                
+            }
+
+            return string.Format($"{{0:{formatString}}}", value); ;
         }
 
         protected virtual string ConvertValueType(object numericValue)
