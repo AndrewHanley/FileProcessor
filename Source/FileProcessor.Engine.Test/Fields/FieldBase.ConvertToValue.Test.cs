@@ -6,15 +6,15 @@
 //    Author:    Andrew - 2017/05/23
 //  ---------------------------------------------
 
-namespace FileProcessor.Engine.Test.Fields
+namespace FileProcessor.Test.Fields
 {
     using System;
     using System.Globalization;
     using System.Reflection;
-    using Engine.Fields;
-    using Engine.Fields.Converters;
-    using Engine.Fields.FieldAttributes;
-    using Engine.Fields.FieldAttributes.FormatAttributes;
+    using FileProcessor.Fields;
+    using FileProcessor.Fields.Converters;
+    using FileProcessor.Fields.FieldAttributes;
+    using FileProcessor.Fields.FieldAttributes.FormatAttributes;
     using Exceptions;
     using Xunit;
 

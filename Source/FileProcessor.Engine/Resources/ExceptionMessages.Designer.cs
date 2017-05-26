@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FileProcessor.Engine.Resources {
+namespace FileProcessor.Resources {
     using System;
     using System.Reflection;
     
@@ -40,7 +40,7 @@ namespace FileProcessor.Engine.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FileProcessor.Engine.Resources.ExceptionMessages", typeof(ExceptionMessages).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FileProcessor.Resources.ExceptionMessages", typeof(ExceptionMessages).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

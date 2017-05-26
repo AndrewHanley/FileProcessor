@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FileProcessor.Engine\FileProcessor.Engine.csproj" />
+    <ProjectReference Include="..\FileProcessor.Engine\FileProcessor.csproj" />
   </ItemGroup>
 
   <ItemGroup>

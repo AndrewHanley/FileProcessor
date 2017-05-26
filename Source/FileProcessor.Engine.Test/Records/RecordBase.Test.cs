@@ -6,11 +6,11 @@
 //    Author:    Andrew - 2017/05/23
 //  ---------------------------------------------
 
-namespace FileProcessor.Engine.Test.Records
+namespace FileProcessor.Test.Records
 {
-    using Engine.Fields.FieldAttributes;
-    using Engine.Records;
-    using Engine.Records.RecordAttributes;
+    using FileProcessor.Fields.FieldAttributes;
+    using FileProcessor.Records;
+    using FileProcessor.Records.RecordAttributes;
     using Exceptions;
     using Xunit;
 

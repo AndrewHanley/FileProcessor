@@ -6,7 +6,7 @@
 //    Author:    Andrew - 2017/05/23
 //  ---------------------------------------------
 
-namespace FileProcessor.Engine.Fields
+namespace FileProcessor.Fields
 {
     using System.Reflection;
     using FieldAttributes;

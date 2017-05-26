@@ -6,7 +6,7 @@
 //    Author:    Andrew - 2017/05/23
 //  ---------------------------------------------
 
-namespace FileProcessor.Engine.Fields.Converters
+namespace FileProcessor.Fields.Converters
 {
     using System.Reflection;
 

@@ -6,7 +6,7 @@
 //    Author:    Andrew - 2017/05/23
 //  ---------------------------------------------
 
-namespace FileProcessor.Engine.Records.RecordElements
+namespace FileProcessor.Records.RecordElements
 {
     using System.Collections.Generic;
     using System.Reflection;

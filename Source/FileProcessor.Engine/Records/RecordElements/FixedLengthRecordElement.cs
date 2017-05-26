@@ -6,7 +6,7 @@
 //    Author:    Andrew - 2017/05/24
 //  ---------------------------------------------
 
-namespace FileProcessor.Engine.Records.RecordElements
+namespace FileProcessor.Records.RecordElements
 {
     public class FixedLengthRecordElement : RecordElementBase
     {

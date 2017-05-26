@@ -6,7 +6,7 @@
 //    Author:    Andrew - 2017/05/23
 //  ---------------------------------------------
 
-namespace FileProcessor.Engine.Records.RecordAttributes
+namespace FileProcessor.Records.RecordAttributes
 {
     using System;
 

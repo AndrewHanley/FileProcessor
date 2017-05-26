@@ -6,7 +6,7 @@
 //    Author:    Andrew - 2017/05/23
 //  ---------------------------------------------
 
-namespace FileProcessor.Engine.Fields.FieldAttributes.FormatAttributes
+namespace FileProcessor.Fields.FieldAttributes.FormatAttributes
 {
     using System;
 

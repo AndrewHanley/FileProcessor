@@ -6,11 +6,11 @@
 //    Author:    Andrew - 2017/05/23
 //  ---------------------------------------------
 
-namespace FileProcessor.Engine.Test.Fields
+namespace FileProcessor.Test.Fields
 {
     using System.Reflection;
-    using Engine.Fields;
-    using Engine.Fields.FieldAttributes;
+    using FileProcessor.Fields;
+    using FileProcessor.Fields.FieldAttributes;
     using Xunit;
 
     public class DelimitedFieldTest
