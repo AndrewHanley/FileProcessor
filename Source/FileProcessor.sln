@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileProcessor", "FileProcessor.Engine\FileProcessor.csproj", "{2B1C1008-0B27-4DC4-89E8-23DCA9440391}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileProcessor", "FileProcessor\FileProcessor.csproj", "{2B1C1008-0B27-4DC4-89E8-23DCA9440391}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileProcessor.Test", "FileProcessor.Engine.Test\FileProcessor.Test.csproj", "{914B2E40-F77D-4D72-8A5B-C5A52DDEDF11}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileProcessor.Test", "FileProcessor.Test\FileProcessor.Test.csproj", "{914B2E40-F77D-4D72-8A5B-C5A52DDEDF11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

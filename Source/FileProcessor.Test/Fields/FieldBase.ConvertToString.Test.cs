@@ -153,6 +153,32 @@ namespace FileProcessor.Test.Fields
             Assert.Equal(expectedValue, field.ConvertToString(value));
         }
 
+        [Theory]
+        [InlineData(1234, "1234.0")]
+        [InlineData(1234.5, "1234.5")]
+        [InlineData(1234.5678, "1234.6")]
+        [InlineData(1234.5432, "1234.5")]
+        public void DecimalField(decimal value, string expectedValue)
+        {
+            var property = typeof(TestDataClass).GetProperty("DecimalField");
+            var field = new TestField(property);
+
+            Assert.Equal(expectedValue, field.ConvertToString(value));
+        }
+
+        [Theory]
+        [InlineData(1234, "123400")]
+        [InlineData(1234.5, "123450")]
+        [InlineData(1234.5678, "123457")]
+        [InlineData(1234.5432, "123454")]
+        public void DecimalNoSeperatorField(decimal value, string expectedValue)
+        {
+            var property = typeof(TestDataClass).GetProperty("DecimalNoSeperatorField");
+            var field = new TestField(property);
+
+            Assert.Equal(expectedValue, field.ConvertToString(value));
+        }
+
         #endregion
 
         #region Custom Converter Tests
@@ -229,6 +255,12 @@ namespace FileProcessor.Test.Fields
 
             [TestField(FormatString = "C")]
             public decimal MoneyField { get; set; }
+
+            [DecimalFormat(1)]
+            public decimal DecimalField { get; set; }
+
+            [DecimalFormat(2, IncludesDecimalSeperator = false)]
+            public decimal DecimalNoSeperatorField { get; set; }
 
             [TestField(FieldConverter = typeof(TestFieldConverter))]
             public int TicketNumberField { get; set; }

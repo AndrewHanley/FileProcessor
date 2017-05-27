@@ -14,14 +14,14 @@ namespace FileProcessor.Test.Records
     using FileProcessor.Records.RecordAttributes;
     using Xunit;
 
-    public class RecordBaseWriteRecordTest
+    public class RecordWriteRecordTest
     {
         #region Delimited Record Tests
 
         [Fact]
         public void WriteDelimitedEmployeeRecord()
         {
-            var record = new Record<Employee>();
+            var record = RecordProcessor.CreateRecord<Employee>();
             var employee = new Employee
                            {
                                EmployeeId = 1,
@@ -36,7 +36,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void WriteDelimitedNestedRecord()
         {
-            var record = new Record<Contact>();
+            var record = RecordProcessor.CreateRecord<Contact>();
             var contact = new Contact
                           {
                               Name = "John Wick",
@@ -87,7 +87,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void WriteFixedLengthVehicleRecord()
         {
-            var record = new Record<Vehicle>();
+            var record = RecordProcessor.CreateRecord<Vehicle>();
             var vehicle = new Vehicle
                           {
                               Make = "Ferrari",
@@ -101,7 +101,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void WriteNestedFixedLengthRecord()
         {
-            var record = new Record<Book>();
+            var record = RecordProcessor.CreateRecord<Book>();
             var book = new Book
                        {
                            IsbnNumber = "978-0439554930",
