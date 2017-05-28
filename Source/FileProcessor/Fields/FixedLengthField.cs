@@ -32,7 +32,7 @@ namespace FileProcessor.Fields
         {
             TruncateField = false;
             FieldAlignment = GetDefaultFieldAlignment(property.PropertyType);
-            PaddingCharacter = GetDefaultPaddingCharacter(FieldAlignment, property.PropertyType);
+            PaddingCharacter = ' ';
 
             ProcessFixedLengthFieldAttribute(property);
         }
@@ -64,23 +64,6 @@ namespace FileProcessor.Fields
                 return FieldAlignment.Right;
 
             return FieldAlignment.Left;
-        }
-
-        private char GetDefaultPaddingCharacter(FieldAlignment alignment, Type propertyType)
-        {
-            if (alignment == FieldAlignment.Left)
-                return ' ';
-
-            var t = propertyType;
-            t = Nullable.GetUnderlyingType(propertyType) ?? t;
-
-            if ((t.GetTypeInfo().IsPrimitive
-                || propertyType == typeof(decimal))
-                && propertyType != typeof(bool)
-                && propertyType != typeof(char))
-                return '0';
-
-            return ' ';
         }
 
         #endregion

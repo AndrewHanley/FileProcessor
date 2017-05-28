@@ -16,7 +16,7 @@ namespace FileProcessor.Test.Records
 
     public class RecordWriteRecordTest
     {
-        #region Delimited Record Tests
+        #region Delimited Record Write Tests
 
         [Fact]
         public void WriteDelimitedEmployeeRecord()
@@ -30,7 +30,37 @@ namespace FileProcessor.Test.Records
                                Salary = 45000
                            };
 
-            Assert.Equal("1,Slug,Bub,$45,000.00", record.WriteRecord(employee));
+            Assert.Equal("1,Slug,Bub,\"$45,000.00\"", record.WriteRecord(employee));
+        }
+
+        [Fact]
+        public void WriteDelimitedWithDelimiterInQuoteEmployeeRecord()
+        {
+            var record = RecordProcessor.CreateRecord<Employee>();
+            var employee = new Employee
+                           {
+                               EmployeeId = 2,
+                               LastName = "Jones",
+                               FirstName = "Vinnie",
+                               Salary = 1500000
+                           };
+
+            Assert.Equal("2,Jones,Vinnie,\"$1,500,000.00\"", record.WriteRecord(employee));
+        }
+
+        [Fact]
+        public void WriteDelimitedWithQuoteInQuoteEmployeeRecord()
+        {
+            var record = RecordProcessor.CreateRecord<Employee>();
+            var employee = new Employee
+                           {
+                               EmployeeId = 3,
+                               LastName = "Johnson",
+                               FirstName = "Dwayne",
+                               Salary = 30500000
+                           };
+
+            Assert.Equal("3,Johnson,Dwayne,\"$30,500,000.00\"", record.WriteRecord(employee));
         }
 
         [Fact]
@@ -57,10 +87,12 @@ namespace FileProcessor.Test.Records
         private class Employee
         {
             public int EmployeeId { get; set; }
+
             public string LastName { get; set; }
+
             public string FirstName { get; set; }
 
-            [DelimitedField(FormatString = "C")]
+            [DelimitedField(FormatString = "C", QuoteCharacter = '"')]
             public decimal Salary { get; set; }
         }
 
@@ -141,7 +173,7 @@ namespace FileProcessor.Test.Records
 
             public Author Author { get; set; }
 
-            [FixedLengthField(4)]
+            [FixedLengthField(4, PaddingCharacter = '0')]
             [DecimalFormat(DecimalPlaces = 2, IncludesDecimalSeperator = false)]
             public decimal Price { get; set; }
         }

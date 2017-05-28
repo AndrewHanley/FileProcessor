@@ -62,7 +62,9 @@ namespace FileProcessor.Records
 
         protected override string PreProcessRecord(string record)
         {
-            if (RecordAttribute.QuoteCharacter == '\0')
+            var fields = FlattenRecordElements(RecordElements).Select(e => (DelimitedField)e.Field).ToList();
+
+            if (RecordAttribute.QuoteCharacter == '\0' && fields.All(f => f.QuoteCharacter == '\0'))
             {
                 RecordValues = record.Split(new[] {RecordAttribute.Delimiter}, StringSplitOptions.None).ToList();
                 return record;
@@ -71,15 +73,24 @@ namespace FileProcessor.Records
             RecordValues = new List<string>();
 
             var quoteIndex = -1;
+            var fieldIndex = 0;
             var startFieldIndex = 0;
             var index = 0;
 
             while (index < record.Length)
             {
-                if (record[index] == RecordAttribute.QuoteCharacter && quoteIndex == -1)
+                if (index < record.Length - 1 &&
+                    ((record[index] == fields[fieldIndex].QuoteCharacter && record[index + 1] == fields[fieldIndex].QuoteCharacter) ||
+                     (record[index] == fields[fieldIndex].EndQuoteCharacter && record[index + 1] == fields[fieldIndex].EndQuoteCharacter)))
+                {
+                    index += 2;
+                    continue;
+                }
+
+                if (record[index] == fields[fieldIndex].QuoteCharacter && quoteIndex == -1)
                     quoteIndex = index;
 
-                if (record[index] == RecordAttribute.EndQuoteCharacter && index != quoteIndex)
+                if (record[index] == fields[fieldIndex].EndQuoteCharacter && index != quoteIndex)
                     quoteIndex = -1;
 
                 if (record.Substring(index, RecordAttribute.Delimiter.Length) == RecordAttribute.Delimiter)
@@ -87,6 +98,11 @@ namespace FileProcessor.Records
                     {
                         RecordValues.Add(record.Substring(startFieldIndex, index - startFieldIndex));
                         startFieldIndex = index + RecordAttribute.Delimiter.Length;
+                        fieldIndex++;
+
+                        // If there are no more Record Element fields to populate stop parsing record
+                        if (fieldIndex >= fields.Count)
+                            break;
                     }
 
                 index++;

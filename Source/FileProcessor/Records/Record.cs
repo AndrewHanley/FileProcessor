@@ -27,7 +27,7 @@ namespace FileProcessor.Records
 
         #endregion
 
-        #region Field Generation
+        #region Field Generation/Manipulation
 
         public void GenerateFields()
         {
@@ -59,11 +59,6 @@ namespace FileProcessor.Records
             return SortElements(elements);
         }
 
-        protected bool IsPropertyEmbeddedClass(PropertyInfo property)
-        {
-            return property.PropertyType.GetTypeInfo().IsClass && property.PropertyType != typeof(string);
-        }
-
         private List<RecordElementBase> SortElements(List<RecordElementBase> elements)
         {
             if (elements.Any(e => e.Order != -1))
@@ -75,6 +70,27 @@ namespace FileProcessor.Records
             }
 
             return elements;
+        }
+
+        protected bool IsPropertyEmbeddedClass(PropertyInfo property)
+        {
+            return property.PropertyType.GetTypeInfo().IsClass && property.PropertyType != typeof(string);
+        }
+
+        protected IEnumerable<RecordElementBase> FlattenRecordElements(IEnumerable<RecordElementBase> elements)
+        {
+            foreach (var element in elements)
+            {
+                if (element.NestedElements != null)
+                {
+                    foreach (var nestedElement in FlattenRecordElements(element.NestedElements))
+                    {
+                        yield return nestedElement;
+                    }
+                }
+                else
+                    yield return element;
+            }
         }
 
         #endregion
@@ -135,10 +151,10 @@ namespace FileProcessor.Records
                 {
                     var nestedEntity = Activator.CreateInstance(property.PropertyType);
 
-                    ReadElement(nestedEntity, element.NestedElements, record, ref position);
+                    property.SetValue(entity, ReadElement(nestedEntity, element.NestedElements, record, ref position));
                 }
-
-                property.SetValue(entity, ExtractField(element, record, ref position));
+                else 
+                    property.SetValue(entity, ExtractField(element, record, ref position));
             }
 
             return entity;

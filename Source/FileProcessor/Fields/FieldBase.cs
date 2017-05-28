@@ -83,6 +83,8 @@ namespace FileProcessor.Fields
                 if (string.IsNullOrWhiteSpace(value) || string.IsNullOrEmpty(value))
                     return GetNullValue();
 
+                value = value.Trim();
+
                 if (FieldType == typeof(bool))
                     return ConvertToBoolean(value);
 
