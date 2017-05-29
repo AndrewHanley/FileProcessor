@@ -1,9 +1,9 @@
 ﻿//  ---------------------------------------------
 //    Solution:  FileProcessor
 //    Project:   FileProcessor
-//    File Name: FixedLengthRecord.cs
+//    File Name: FixedLengthRecordProcessor.cs
 //  
-//    Author:    Andrew - 2017/05/26
+//    Author:    Andrew - 2017/05/28
 //  ---------------------------------------------
 
 namespace FileProcessor.Records
@@ -17,7 +17,7 @@ namespace FileProcessor.Records
     using RecordElements;
     using Resources;
 
-    public class FixedLengthRecord<T> : Record<T> where T : class, new()
+    public class FixedLengthRecordProcessor<T> : RecordProcessor<T> where T : class, new()
     {
         #region Properties
 
@@ -29,7 +29,7 @@ namespace FileProcessor.Records
 
         #endregion
 
-        public FixedLengthRecord(FixedLengthRecordAttribute recordAttribute)
+        public FixedLengthRecordProcessor(FixedLengthRecordAttribute recordAttribute)
         {
             RecordAttribute = recordAttribute;
         }

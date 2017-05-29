@@ -21,7 +21,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void NoAttributeRecord()
         {
-            var exception = Assert.Throws<AttributeException>(() => RecordProcessor.CreateRecord<BadDataClass>());
+            var exception = Assert.Throws<AttributeException>(() => RecordBuilder.CreateProcessor<BadDataClass>());
 
             Assert.Equal("The BadDataClass record requires a RecordAttribute to be defined.", exception.Message);
         }
@@ -29,7 +29,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void UnexpectedTypeRecord()
         {
-            var exception = Assert.Throws<AttributeException>(() => RecordProcessor.CreateRecord<InvalidTypeClass>());
+            var exception = Assert.Throws<AttributeException>(() => RecordBuilder.CreateProcessor<InvalidTypeClass>());
 
             Assert.Equal("Processing for record type TestRecAttrAttribute has not been implemented.", exception.Message);
         }
@@ -41,15 +41,15 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void CreateFixedLengthRecord()
         {
-            var record = RecordProcessor.CreateRecord<FixedLengthClass>();
+            var record = RecordBuilder.CreateProcessor<FixedLengthClass>();
 
-            Assert.Equal(typeof(FixedLengthRecord<FixedLengthClass>), record.GetType());
+            Assert.Equal(typeof(FixedLengthRecordProcessor<FixedLengthClass>), record.GetType());
         }
 
         [Fact]
         public void FixedLengthFields()
         {
-            var record = RecordProcessor.CreateRecord<FixedLengthClass>();
+            var record = RecordBuilder.CreateProcessor<FixedLengthClass>();
 
             Assert.Equal("StringField", record.RecordElements[0].Field.Name);
             Assert.Equal("IntField", record.RecordElements[1].Field.Name);
@@ -58,7 +58,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void FixedLengthNestedFields()
         {
-            var record = RecordProcessor.CreateRecord<FixedLengthNestedClass>();
+            var record = RecordBuilder.CreateProcessor<FixedLengthNestedClass>();
 
             Assert.Equal("StringField", record.RecordElements[0].Field.Name);
             Assert.Equal("IntField", record.RecordElements[1].Field.Name);
@@ -69,7 +69,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void InheritedFields()
         {
-            var record = RecordProcessor.CreateRecord<FixedLengthInheritedClass>();
+            var record = RecordBuilder.CreateProcessor<FixedLengthInheritedClass>();
 
             Assert.Equal("StringField", record.RecordElements[0].Field.Name);
             Assert.Equal("IntField", record.RecordElements[1].Field.Name);
@@ -79,7 +79,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void FixedLengthException()
         {
-            var exception = Assert.Throws<AttributeException>(() => RecordProcessor.CreateRecord<FixedLengthExceptionClass>());
+            var exception = Assert.Throws<AttributeException>(() => RecordBuilder.CreateProcessor<FixedLengthExceptionClass>());
 
             Assert.Equal("The IntField property requires a FixedLengthAttribute with a Length definited.", exception.Message);
         }
@@ -87,7 +87,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void FixedLengthNestedException()
         {
-            var exception = Assert.Throws<AttributeException>(() => RecordProcessor.CreateRecord<FixedLengthNestedExceptionClass>());
+            var exception = Assert.Throws<AttributeException>(() => RecordBuilder.CreateProcessor<FixedLengthNestedExceptionClass>());
 
             Assert.Equal("The EmbeddedField property requires a FixedLengthAttribute with a Length definited.", exception.Message);
         }
@@ -99,9 +99,9 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void CreateDelimitedRecord()
         {
-            var record = RecordProcessor.CreateRecord<DelimitedClass>();
+            var record = RecordBuilder.CreateProcessor<DelimitedClass>();
 
-            Assert.Equal(typeof(DelimitedRecord<DelimitedClass>), record.GetType());
+            Assert.Equal(typeof(DelimitedRecordProcessor<DelimitedClass>), record.GetType());
             Assert.Equal(";", ((DelimitedRecordAttribute) record.RecordAttribute).Delimiter);
             Assert.Equal('[', ((DelimitedRecordAttribute) record.RecordAttribute).QuoteCharacter);
             Assert.Equal(']', ((DelimitedRecordAttribute) record.RecordAttribute).EndQuoteCharacter);
@@ -110,7 +110,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void NoDelimiterException()
         {
-            var exception = Assert.Throws<AttributeException>(() => RecordProcessor.CreateRecord<NoDelimiterClass>());
+            var exception = Assert.Throws<AttributeException>(() => RecordBuilder.CreateProcessor<NoDelimiterClass>());
 
             Assert.Equal("NoDelimiterClass has a DelimiterRecordAttribute without a specified Delimiter. A Delimiter is required for file processing.", exception.Message);
         }
@@ -118,7 +118,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void DelimitedFields()
         {
-            var record = RecordProcessor.CreateRecord<DelimitedDataClass>();
+            var record = RecordBuilder.CreateProcessor<DelimitedDataClass>();
 
             Assert.Equal("StringField", record.RecordElements[0].Field.Name);
             Assert.Equal("IntField", record.RecordElements[1].Field.Name);
@@ -127,7 +127,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void DelimitedNestedFields()
         {
-            var record = RecordProcessor.CreateRecord<DelimitedNestedClass>();
+            var record = RecordBuilder.CreateProcessor<DelimitedNestedClass>();
 
             Assert.Equal("StringField", record.RecordElements[0].Field.Name);
             Assert.Equal("IntField", record.RecordElements[1].Field.Name);
@@ -138,7 +138,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void DelimitedOrderedFields()
         {
-            var record = RecordProcessor.CreateRecord<OrderedDelimitedClass>();
+            var record = RecordBuilder.CreateProcessor<OrderedDelimitedClass>();
 
             Assert.Equal("IntField", record.RecordElements[0].Field.Name);
             Assert.Equal("StringField", record.RecordElements[1].Field.Name);
@@ -151,7 +151,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void OrderedFields()
         {
-            var record = RecordProcessor.CreateRecord<OrderedTestClass>();
+            var record = RecordBuilder.CreateProcessor<OrderedTestClass>();
 
             Assert.Equal("IntField", record.RecordElements[0].Field.Name);
             Assert.Equal("StringField", record.RecordElements[1].Field.Name);
@@ -160,7 +160,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void OrderedNestedFields()
         {
-            var record = RecordProcessor.CreateRecord<OrderedNestedTestClass>();
+            var record = RecordBuilder.CreateProcessor<OrderedNestedTestClass>();
 
             Assert.Equal("IntField", record.RecordElements[0].Field.Name);
             Assert.Equal("StringField", record.RecordElements[1].Field.Name);

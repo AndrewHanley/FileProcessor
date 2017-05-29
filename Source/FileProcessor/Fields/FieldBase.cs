@@ -9,6 +9,8 @@
 namespace FileProcessor.Fields
 {
     using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Globalization;
     using System.Reflection;
     using Converters;
@@ -16,6 +18,7 @@ namespace FileProcessor.Fields
     using FieldAttributes;
     using FieldAttributes.FormatAttributes;
     using Resources;
+    using Validation;
 
     public abstract class FieldBase
     {
@@ -260,6 +263,31 @@ namespace FileProcessor.Fields
             return string.IsNullOrEmpty(FormatString)
                 ? numericValue.ToString()
                 : string.Format($"{{0:{FormatString}}}", numericValue);
+        }
+
+        #endregion
+
+        #region Validation
+
+        public IEnumerable<FieldValidationError> Validate(object value, ValidationContext context)
+        {
+            var results = new List<ValidationResult>();
+
+            if (Validator.TryValidateProperty(value, context, results))
+            {
+                yield break;
+            }
+
+            foreach (var result in results)
+            {
+                yield return new FieldValidationError
+                                {
+                                    FieldName = Name,
+                                    FieldValue = value,
+                                    ValidationType = result.GetType(),
+                                    ErrorMessage = result.ErrorMessage
+                                };
+            }
         }
 
         #endregion

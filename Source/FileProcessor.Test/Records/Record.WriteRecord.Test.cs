@@ -21,7 +21,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void WriteDelimitedEmployeeRecord()
         {
-            var record = RecordProcessor.CreateRecord<Employee>();
+            var record = RecordBuilder.CreateProcessor<Employee>();
             var employee = new Employee
                            {
                                EmployeeId = 1,
@@ -36,7 +36,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void WriteDelimitedWithDelimiterInQuoteEmployeeRecord()
         {
-            var record = RecordProcessor.CreateRecord<Employee>();
+            var record = RecordBuilder.CreateProcessor<Employee>();
             var employee = new Employee
                            {
                                EmployeeId = 2,
@@ -51,7 +51,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void WriteDelimitedWithQuoteInQuoteEmployeeRecord()
         {
-            var record = RecordProcessor.CreateRecord<Employee>();
+            var record = RecordBuilder.CreateProcessor<Employee>();
             var employee = new Employee
                            {
                                EmployeeId = 3,
@@ -66,7 +66,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void WriteDelimitedNestedRecord()
         {
-            var record = RecordProcessor.CreateRecord<Contact>();
+            var record = RecordBuilder.CreateProcessor<Contact>();
             var contact = new Contact
                           {
                               Name = "John Wick",
@@ -119,7 +119,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void WriteFixedLengthVehicleRecord()
         {
-            var record = RecordProcessor.CreateRecord<Vehicle>();
+            var record = RecordBuilder.CreateProcessor<Vehicle>();
             var vehicle = new Vehicle
                           {
                               Make = "Ferrari",
@@ -133,7 +133,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void WriteNestedFixedLengthRecord()
         {
-            var record = RecordProcessor.CreateRecord<Book>();
+            var record = RecordBuilder.CreateProcessor<Book>();
             var book = new Book
                        {
                            IsbnNumber = "978-0439554930",

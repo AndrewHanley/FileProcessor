@@ -22,7 +22,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void ReadDelimitedClientRecord()
         {
-            var record = RecordProcessor.CreateRecord<Client>();
+            var record = RecordBuilder.CreateProcessor<Client>();
             var client = record.ReadRecord("1,Client A");
 
             Assert.Equal(1, client.ClientId);
@@ -32,7 +32,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void ReadDelimitedEmployeeWithDelimiterInQuoteRecord()
         {
-            var record = RecordProcessor.CreateRecord<Employee>();
+            var record = RecordBuilder.CreateProcessor<Employee>();
             var employee = record.ReadRecord("2,Jones,Vinnie,\"$1,500,000.00\"");
 
             Assert.Equal(2, employee.EmployeeId);
@@ -44,7 +44,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void ReadDelimitedWithQuoteInQuoteEmployeeRecord()
         {
-            var record = RecordProcessor.CreateRecord<Actor>();
+            var record = RecordBuilder.CreateProcessor<Actor>();
             var actor = record.ReadRecord("\"Dwayne \"\"The Rock\"\" Johnson\",\"19720502\"");
 
             Assert.Equal("Dwayne \"The Rock\" Johnson", actor.Name);
@@ -54,7 +54,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void ReadDelimitedNestedRecord()
         {
-            var record = RecordProcessor.CreateRecord<Contact>();
+            var record = RecordBuilder.CreateProcessor<Contact>();
             var contact = record.ReadRecord("[John Wick]|[(555) 444-9999]|[12323 - 45 street]|[Edmonton]|[AB]|[T6W 1T4]");
 
             Assert.Equal("John Wick", contact.Name);
@@ -118,7 +118,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void ReadFixedLengthVehicleRecord()
         {
-            var record = RecordProcessor.CreateRecord<Vehicle>();
+            var record = RecordBuilder.CreateProcessor<Vehicle>();
             var vehicle = record.ReadRecord("Ferrari             Enzo                2004");
 
             Assert.Equal("Ferrari", vehicle.Make);
@@ -129,7 +129,7 @@ namespace FileProcessor.Test.Records
         [Fact]
         public void ReadNestedFixedLengthRecord()
         {
-            var record = RecordProcessor.CreateRecord<Book>();
+            var record = RecordBuilder.CreateProcessor<Book>();
             var book = record.ReadRecord("978-0439554930Harry Potter and the Philosopher's Stone          Rowling             J.K.                0922");
 
             Assert.Equal("978-0439554930", book.IsbnNumber);

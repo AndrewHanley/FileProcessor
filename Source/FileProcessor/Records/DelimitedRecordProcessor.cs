@@ -1,9 +1,9 @@
 ﻿//  ---------------------------------------------
 //    Solution:  FileProcessor
 //    Project:   FileProcessor
-//    File Name: DelimitedRecord.cs
+//    File Name: DelimitedRecordProcessor.cs
 //  
-//    Author:    Andrew - 2017/05/26
+//    Author:    Andrew - 2017/05/28
 //  ---------------------------------------------
 
 namespace FileProcessor.Records
@@ -19,7 +19,7 @@ namespace FileProcessor.Records
     using RecordElements;
     using Resources;
 
-    public class DelimitedRecord<T> : Record<T> where T : class, new()
+    public class DelimitedRecordProcessor<T> : RecordProcessor<T> where T : class, new()
     {
         #region Properties
 
@@ -33,7 +33,7 @@ namespace FileProcessor.Records
 
         #endregion
 
-        public DelimitedRecord(DelimitedRecordAttribute recordAttribute)
+        public DelimitedRecordProcessor(DelimitedRecordAttribute recordAttribute)
         {
             RecordAttribute = recordAttribute;
 
@@ -62,7 +62,7 @@ namespace FileProcessor.Records
 
         protected override string PreProcessRecord(string record)
         {
-            var fields = FlattenRecordElements(RecordElements).Select(e => (DelimitedField)e.Field).ToList();
+            var fields = FlattenRecordElements(RecordElements).Select(e => (DelimitedField) e.Field).ToList();
 
             if (RecordAttribute.QuoteCharacter == '\0' && fields.All(f => f.QuoteCharacter == '\0'))
             {
@@ -80,8 +80,8 @@ namespace FileProcessor.Records
             while (index < record.Length)
             {
                 if (index < record.Length - 1 &&
-                    ((record[index] == fields[fieldIndex].QuoteCharacter && record[index + 1] == fields[fieldIndex].QuoteCharacter) ||
-                     (record[index] == fields[fieldIndex].EndQuoteCharacter && record[index + 1] == fields[fieldIndex].EndQuoteCharacter)))
+                    (record[index] == fields[fieldIndex].QuoteCharacter && record[index + 1] == fields[fieldIndex].QuoteCharacter ||
+                     record[index] == fields[fieldIndex].EndQuoteCharacter && record[index + 1] == fields[fieldIndex].EndQuoteCharacter))
                 {
                     index += 2;
                     continue;
