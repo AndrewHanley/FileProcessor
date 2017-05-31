@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileProcessor.Test", "FileProcessor.Test\FileProcessor.Test.csproj", "{914B2E40-F77D-4D72-8A5B-C5A52DDEDF11}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileProcessor", "FileProcessor\FileProcessor.csproj", "{64930ECD-8E92-428D-9662-D8C0F9044A35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileProcessor.Example.Moves", "FileProcessor.Example.Moves\FileProcessor.Example.Moves.csproj", "{77FBDE69-4E58-4149-9CF6-A51D42FF1455}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,22 @@ Global
 		{64930ECD-8E92-428D-9662-D8C0F9044A35}.Release|x64.Build.0 = Release|Any CPU
 		{64930ECD-8E92-428D-9662-D8C0F9044A35}.Release|x86.ActiveCfg = Release|Any CPU
 		{64930ECD-8E92-428D-9662-D8C0F9044A35}.Release|x86.Build.0 = Release|Any CPU
+		{77FBDE69-4E58-4149-9CF6-A51D42FF1455}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77FBDE69-4E58-4149-9CF6-A51D42FF1455}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77FBDE69-4E58-4149-9CF6-A51D42FF1455}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{77FBDE69-4E58-4149-9CF6-A51D42FF1455}.Debug|ARM.Build.0 = Debug|Any CPU
+		{77FBDE69-4E58-4149-9CF6-A51D42FF1455}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{77FBDE69-4E58-4149-9CF6-A51D42FF1455}.Debug|x64.Build.0 = Debug|Any CPU
+		{77FBDE69-4E58-4149-9CF6-A51D42FF1455}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{77FBDE69-4E58-4149-9CF6-A51D42FF1455}.Debug|x86.Build.0 = Debug|Any CPU
+		{77FBDE69-4E58-4149-9CF6-A51D42FF1455}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77FBDE69-4E58-4149-9CF6-A51D42FF1455}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77FBDE69-4E58-4149-9CF6-A51D42FF1455}.Release|ARM.ActiveCfg = Release|Any CPU
+		{77FBDE69-4E58-4149-9CF6-A51D42FF1455}.Release|ARM.Build.0 = Release|Any CPU
+		{77FBDE69-4E58-4149-9CF6-A51D42FF1455}.Release|x64.ActiveCfg = Release|Any CPU
+		{77FBDE69-4E58-4149-9CF6-A51D42FF1455}.Release|x64.Build.0 = Release|Any CPU
+		{77FBDE69-4E58-4149-9CF6-A51D42FF1455}.Release|x86.ActiveCfg = Release|Any CPU
+		{77FBDE69-4E58-4149-9CF6-A51D42FF1455}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

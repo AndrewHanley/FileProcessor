@@ -10,7 +10,7 @@ namespace FileProcessor.Records
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    //using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Reflection;
     using Exceptions;
@@ -59,11 +59,12 @@ namespace FileProcessor.Records
 
                 element.FieldName = property.Name;
 
-                if (property.IsDefined(typeof(ValidationAttribute), true))
-                {
-                    element.IncludesValidation = true;
-                    RunValidation = true;
-                }
+                //TODO: Put back once DataAnnotation reference issue is resolved
+                //if (property.IsDefined(typeof(ValidationAttribute), true))
+                //{
+                //    element.IncludesValidation = true;
+                //    RunValidation = true;
+                //}
 
                 if (IsPropertyEmbeddedClass(property))
                     element.NestedElements = SortElements(ExtractRecordElements(property.PropertyType));
@@ -200,18 +201,20 @@ namespace FileProcessor.Records
 
         private IEnumerable<FieldValidationError> ValidateElements(object entity, List<RecordElementBase> elements)
         {
-            foreach (var element in elements.Where(e => e.IncludesValidation || e.NestedElements != null))
-            {
-                var validationContext = new ValidationContext(entity) {MemberName = element.FieldName};
-                var value = entity.GetType().GetRuntimeProperty(element.FieldName).GetValue(entity);
+            //TODO: Put back once DataAnnotation reference issue is resolved
+            //foreach (var element in elements.Where(e => e.IncludesValidation || e.NestedElements != null))
+            //{
+            //    var validationContext = new ValidationContext(entity) {MemberName = element.FieldName};
+            //    var value = entity.GetType().GetRuntimeProperty(element.FieldName).GetValue(entity);
 
-                foreach (var error in element.Field.Validate(value, validationContext))
-                    yield return error;
+            //    foreach (var error in element.Field.Validate(value, validationContext))
+            //        yield return error;
 
-                if (element.NestedElements != null)
-                    foreach (var error in ValidateElements(value, element.NestedElements))
-                        yield return error;
-            }
+            //    if (element.NestedElements != null)
+            //        foreach (var error in ValidateElements(value, element.NestedElements))
+            //            yield return error;
+            //}
+            return null;
         }
 
         #endregion

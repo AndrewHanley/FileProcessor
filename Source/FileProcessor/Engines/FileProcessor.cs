@@ -8,11 +8,13 @@
 
 namespace FileProcessor.Engines
 {
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
 
     public class FileProcessor<T> : EngineBase<T> where T : class, new()
     {
-        public FileInfo FileInfo { get; set; }
+        protected FileInfo FileInfo { get; set; }
 
         public FileProcessor(string fileName)
         {
@@ -27,6 +29,16 @@ namespace FileProcessor.Engines
         protected override TextWriter GetWriter(bool append)
         {
             return append ? FileInfo.AppendText() : FileInfo.CreateText();
+        }
+
+        public List<T> ReadFile()
+        {
+            return ReadRecords().ToList();
+        }
+
+        public void WriteFile(IEnumerable<T> entities, bool append = false)
+        {
+            WriteRecords(entities, append);
         }
     }
 }

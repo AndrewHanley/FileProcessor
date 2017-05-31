@@ -1,0 +1,60 @@
+﻿<Window x:Class="FileProcessor.Example.Moves.Views.MovesRecordProcessor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FileProcessor.Example.Moves.Views"
+        xmlns:viewModels="clr-namespace:FileProcessor.Example.Moves.ViewModels"
+        mc:Ignorable="d"
+        Title="MovesRecordProcessor" Height="800" Width="1000">
+    
+    <Window.Resources>
+        <viewModels:MovesRecordProcessorViewModel x:Key="ViewModel"/>
+        
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="MinHeight" Value="30"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid x:Name="LayoutGrid" DataContext="{StaticResource ViewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        
+        <DataGrid Grid.Row="0" Grid.Column="0"
+                  ItemsSource="{Binding Plates}"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  IsReadOnly="True">
+        </DataGrid>
+
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            <Button Content="Load File..." 
+                    Click="LoadFile_OnClick"></Button>
+        </StackPanel>
+
+        <DataGrid Grid.Row="1" Grid.Column="0"
+                  ItemsSource="{Binding RegisteredOwners}"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  IsReadOnly="True">
+        </DataGrid>
+
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <Button Content="Generate Response Records"
+                    Command="{Binding GenerateResponseRecordsCommand}"/>
+            
+            <Button Content="Write File..." 
+                    Click="WriteFile_OnClick"></Button>
+        </StackPanel>
+    </Grid>
+</Window>
+

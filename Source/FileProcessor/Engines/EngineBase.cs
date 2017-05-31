@@ -18,10 +18,10 @@ namespace FileProcessor.Engines
     {
         #region Properties
 
-        public TextReader Reader { get; set; }
-        public TextWriter Writer { get; set; }
-
         public int LineNumber { get; set; }
+
+        protected TextReader Reader { get; set; }
+        protected TextWriter Writer { get; set; }
 
         protected RecordProcessor<T> RecordProcessor { get; set; }
         //protected List<IRecordProcessor> ProcessorTypes { get; set; }
@@ -52,7 +52,7 @@ namespace FileProcessor.Engines
                 T entity;
 
                 while ((entity = ReadRecord()) != null)
-                    yield return entity;
+                        yield return entity;
             }
         }
 
@@ -74,7 +74,7 @@ namespace FileProcessor.Engines
 
             var record = builder.ToString();
 
-            return record == null ? null : RecordProcessor.ReadRecord(record);
+            return record == null || record == "\r\n" ? null : RecordProcessor.ReadRecord(record);
         }
 
         #endregion
