@@ -125,7 +125,7 @@ namespace FileProcessor.Records
 
             foreach (var element in elements)
             {
-                var value = entity.GetType().GetProperty(element.FieldName).GetValue(entity);
+                var value = entity.GetType().GetRuntimeProperty(element.FieldName).GetValue(entity);
 
                 if (element.NestedElements != null)
                 {
@@ -172,7 +172,7 @@ namespace FileProcessor.Records
         {
             foreach (var element in elements)
             {
-                var property = entity.GetType().GetProperty(element.FieldName);
+                var property = entity.GetType().GetRuntimeProperty(element.FieldName);
 
                 if (element.NestedElements != null)
                 {
@@ -203,7 +203,7 @@ namespace FileProcessor.Records
             foreach (var element in elements.Where(e => e.IncludesValidation || e.NestedElements != null))
             {
                 var validationContext = new ValidationContext(entity) {MemberName = element.FieldName};
-                var value = entity.GetType().GetProperty(element.FieldName).GetValue(entity);
+                var value = entity.GetType().GetRuntimeProperty(element.FieldName).GetValue(entity);
 
                 foreach (var error in element.Field.Validate(value, validationContext))
                     yield return error;
